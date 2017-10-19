@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle color-indent",
+        "command": "color-indent:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "color-indent",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "color-indent:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
