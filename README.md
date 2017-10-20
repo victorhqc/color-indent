@@ -1,7 +1,7 @@
 # color-indent
 Colors for the indentation level.
 
-![color-indent](https://i.imgur.com/PDi86kw.png)
+![Color Indent](https://i.imgur.com/PDi86kw.png)
 
 ## Features
 I once saw something like this some years ago. Unfortunately I don't remember where, but since I
@@ -52,6 +52,7 @@ Unfortunately, the Atom API limits the specific markers for this plugin, so the 
 
 ## Usage
 Just type and see how the tabulation color is filled.
-![color-indent-animation](https://i.imgur.com/KP7fZii.gifv)
+
+![Color Indent animation](https://i.imgur.com/KP7fZii.gif)
 
 You can also toggle the colors if you need to deactivate it or reactivate it quickly. Go to the Atom Command Palette and choose `color-indent: toggle`.
