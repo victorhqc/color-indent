@@ -43,6 +43,7 @@ describe('ColorIndent', () => {
 
     editor.setText(indentedText);
     editor.setText(indentedText);
+    editor.setText(indentedText);
 
     const numberOfLines = editor.getLineCount();
     const decorations = findDecorations(editor);
@@ -97,7 +98,6 @@ describe('ColorIndent', () => {
 
     expect(secondDecorations.length).toBe(4);
 
-
     // There should be 2 style for zero indentation
     const zeroTabDecorations = findDecorationByIndentation(secondDecorations, 0);
     expect(
@@ -115,6 +115,24 @@ describe('ColorIndent', () => {
     expect(
       twoTabDecorations.length,
     ).toBe(1);
+  });
+
+  it('Should handle inserting lines in the middle of text', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(notIndentedText);
+
+    // Inserts several new lines
+    editor.setCursorScreenPosition([1, 0]);
+    editor.insertNewlineBelow();
+    editor.insertNewlineBelow();
+    editor.insertNewlineBelow();
+    editor.insertNewlineBelow();
+    editor.insertNewlineBelow();
+    editor.insertNewlineBelow();
+
+    const numberOfLines = editor.getLineCount();
+    const decorations = findDecorations(editor);
+    expect(decorations.length).toBe(numberOfLines + 1);
   });
 
   it('Should remove all paint toggling the package', () => {
@@ -182,7 +200,7 @@ describe('ColorIndent', () => {
     editor.setTextInBufferRange([[4, 0], [4, 21]], textToInsert);
     const decorations = findDecorations(editor);
 
-    expect(decorations.length).toBe(numberOfLines);
+    expect(decorations.length).toBe(numberOfLines + 1);
   });
 
   it('Should set correct paint when removing indentation from a single line', () => {
