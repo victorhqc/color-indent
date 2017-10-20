@@ -4,96 +4,87 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
-.color-indent {
-  border-right: 5px solid transparent;
+@width: 5px;
+@style: solid;
 
-  &.color-indent-0 {
-    &.blue {
-      border-right: 5px solid #00a6fb;
-    }
-    &.green {
-      border-right: 5px solid #5bba6f;
-    }
-    &.turquoise {
-      border-right: 5px solid #c4fff9;
-    }
-    &.pink {
-      border-right: 5px solid #e0b1cb;
-    }
-    &.custom {
-      border-right: 5px solid transparent;
-    }
-  }
+@blue-0: #00a6fb;
+@blue-1: #0582ca;
+@blue-2: #006494;
+@blue-3: #003554;
+@blue-4: #051923;
+.generate-color(~'blue', 4);
 
-  &.color-indent-1 {
-    &.blue {
-      border-right: 5px solid #0582ca;
-    }
-    &.green {
-      border-right: 5px solid #3fa34d;
-    }
-    &.turquoise {
-      border-right: 5px solid #9ceaef;
-    }
-    &.pink {
-      border-right: 5px solid #be95c4;
-    }
-    &.custom {
-      border-right: 5px solid transparent;
-    }
-  }
+@aquamarine-0: #b4e5b0;
+@aquamarine-1: #61d095;
+@aquamarine-2: #48bf84;
+@aquamarine-3: #439775;
+@aquamarine-4: #2a4747;
+.generate-color(~'aquamarine', 4);
 
-  &.color-indent-2 {
-    &.blue {
-      border-right: 5px solid #006494;
-    }
-    &.green {
-      border-right: 5px solid #2a9134;
-    }
-    &.turquoise {
-      border-right: 5px solid #68d8d6;
-    }
-    &.pink {
-      border-right: 5px solid #9f86c0;
-    }
-    &.custom {
-      border-right: 5px solid transparent;
-    }
-  }
+@green-0: #5bba6f;
+@green-1: #3fa34d;
+@green-2: #2a9134;
+@green-3: #137547;
+@green-4: #054a29;
+.generate-color(~'green', 4);
 
-  &.color-indent-3 {
-    &.blue {
-      border-right: 5px solid #003554;
-    }
-    &.green {
-      border-right: 5px solid #137547;
-    }
-    &.turquoise {
-      border-right: 5px solid #3dccc7;
-    }
-    &.pink {
-      border-right: 5px solid #5e548e;
-    }
-    &.custom {
-      border-right: 5px solid transparent;
-    }
-  }
+@safari-0: #ecf39e;
+@safari-1: #90a955;
+@safari-2: #4f772d;
+@safari-3: #31572c;
+@safari-4: #132a13;
+.generate-color(~'safari', 4);
 
-  &.color-indent-4 {
-    &.blue {
-      border-right: 5px solid #051923;
-    }
-    &.green {
-      border-right: 5px solid #054a29;
-    }
-    &.turquoise {
-      border-right: 5px solid #07beb8;
-    }
-    &.pink {
-      border-right: 5px solid #231942;
-    }
-    &.custom {
-      border-right: 5px solid transparent;
+@midnight-0: #0c6164;
+@midnight-1: #075154;
+@midnight-2: #044244;
+@midnight-3: #02383a;
+@midnight-4: #002c2d;
+.generate-color(~'midnight', 4);
+
+@pink-0: #ea88bc;
+@pink-1: #e25499;
+@pink-2: #d82e89;
+@pink-3: #b22671;
+@pink-4: #662045;
+.generate-color(~'pink', 4);
+
+@purple-0: #4f0e93;
+@purple-1: #420c7c;
+@purple-2: #3a0a6d;
+@purple-3: #2e0856;
+@purple-4: #20063b;
+.generate-color(~'purple', 4);
+
+
+@red-0: #ce102d;
+@red-1: #b7122b;
+@red-2: #a01428;
+@red-3: #891325;
+@red-4: #741220;
+.generate-color(~'red', 4);
+
+@orange-0: #ffc870;
+@orange-1: #ffb627;
+@orange-2: #ff9505;
+@orange-3: #ff8121;
+@orange-4: #ff6b02;
+.generate-color(~'orange', 4);
+
+@mustard-0: #ffdda1;
+@mustard-1: #ffd151;
+@mustard-2: #f8c537;
+@mustard-3: #d89400;
+@mustard-4: #b55d1e;
+.generate-color(~'mustard', 4);
+
+
+.generate-color(@color, @counter) when(@counter >= 0) {
+  @current-color: "@{color}-@{counter}";
+  .generate-color(@color, @counter - 1);
+  &.color-indent-@{counter} {
+    &.@{color} {
+      border-right: @width @style @@current-color;
     }
   }
 }
