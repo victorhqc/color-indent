@@ -1,7 +1,7 @@
 {
   "name": "color-indent",
   "main": "./lib/color-indent",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Color for indentation",
   "keywords": [
     "indent",
