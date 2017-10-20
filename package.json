@@ -1,14 +1,14 @@
 {
   "name": "color-indent",
   "main": "./lib/color-indent",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Color for indentation",
   "keywords": [
     "indent",
     "indentation",
     "color"
   ],
-  "repository": "https://github.com/atom/color-indent",
+  "repository": "https://github.com/victorhqc/color-indent",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
