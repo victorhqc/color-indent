@@ -1,5 +1,5 @@
 # color-indent
-Colors for the indentation level.
+Show in a non intrusive manner different indentation levels with colors.
 
 ![Color Indent](https://i.imgur.com/PDi86kw.png)
 
