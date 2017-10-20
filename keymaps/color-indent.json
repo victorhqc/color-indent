@@ -1,5 +1,3 @@
 {
-  "atom-workspace": {
-    "ctrl-alt-o": "color-indent:toggle"
-  }
+  "atom-workspace": {}
 }

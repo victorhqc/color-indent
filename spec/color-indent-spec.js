@@ -1,6 +1,26 @@
 'use babel';
 
-import ColorIndent from '../lib/color-indent';
+import {
+  openTestFile,
+  findDecorations,
+  activatePackage,
+  findDecorationByIndentation,
+  togglePackage,
+} from './helpers';
+
+const indentedText = `color 0
+  color 1
+    color 2
+      color 3
+        color 4
+          color 4 again`;
+
+const notIndentedText = `color 0
+color 0
+color 0
+color 0`;
+
+const indentedLine = '        indentation of 4';
 
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
@@ -8,66 +28,197 @@ import ColorIndent from '../lib/color-indent';
 // or `fdescribe`). Remove the `f` to unfocus the block.
 
 describe('ColorIndent', () => {
-  let workspaceElement, activationPromise;
-
   beforeEach(() => {
-    workspaceElement = atom.views.getView(atom.workspace);
-    activationPromise = atom.packages.activatePackage('color-indent');
+    waitsForPromise(() => openTestFile(atom));
+
+    waitsForPromise(() => activatePackage(atom));
   });
 
-  describe('when the color-indent:toggle event is triggered', () => {
-    it('hides and shows the modal panel', () => {
-      // Before the activation event the view is not on the DOM, and no panel
-      // has been created
-      expect(workspaceElement.querySelector('.color-indent')).not.toExist();
+  it('Should activate package', () => {
+    expect(atom.packages.isPackageActive('color-indent')).toBeTruthy();
+  });
 
-      // This is an activation event, triggering it will cause the package to be
-      // activated.
-      atom.commands.dispatch(workspaceElement, 'color-indent:toggle');
+  it('Should update paint in multiple lines', () => {
+    const editor = atom.workspace.getActiveTextEditor();
 
-      waitsForPromise(() => {
-        return activationPromise;
-      });
+    editor.setText(indentedText);
+    editor.setText(indentedText);
 
-      runs(() => {
-        expect(workspaceElement.querySelector('.color-indent')).toExist();
+    const numberOfLines = editor.getLineCount();
+    const decorations = findDecorations(editor);
+    expect(decorations.length).toBe(numberOfLines);
 
-        let colorIndentElement = workspaceElement.querySelector('.color-indent');
-        expect(colorIndentElement).toExist();
+    // There should be 1 style for zero indentation
+    const zeroTabDecorations = findDecorationByIndentation(decorations, 0);
+    expect(
+      zeroTabDecorations.length,
+    ).toBe(1);
 
-        let colorIndentPanel = atom.workspace.panelForItem(colorIndentElement);
-        expect(colorIndentPanel.isVisible()).toBe(true);
-        atom.commands.dispatch(workspaceElement, 'color-indent:toggle');
-        expect(colorIndentPanel.isVisible()).toBe(false);
-      });
-    });
+    // There should be 1 style for one indentation
+    const oneTabDecorations = findDecorationByIndentation(decorations, 1);
+    expect(
+      oneTabDecorations.length,
+    ).toBe(1);
 
-    it('hides and shows the view', () => {
-      // This test shows you an integration test testing at the view level.
+    // There should be 1 style for two indentation
+    const twoTabDecorations = findDecorationByIndentation(decorations, 2);
+    expect(
+      twoTabDecorations.length,
+    ).toBe(1);
 
-      // Attaching the workspaceElement to the DOM is required to allow the
-      // `toBeVisible()` matchers to work. Anything testing visibility or focus
-      // requires that the workspaceElement is on the DOM. Tests that attach the
-      // workspaceElement to the DOM are generally slower than those off DOM.
-      jasmine.attachToDOM(workspaceElement);
+    // There should be 1 style for two indentation
+    const threeTabDecorations = findDecorationByIndentation(decorations, 3);
+    expect(
+      threeTabDecorations.length,
+    ).toBe(1);
 
-      expect(workspaceElement.querySelector('.color-indent')).not.toExist();
+    // There should be 1 style for two indentation
+    const fourTabDecorations = findDecorationByIndentation(decorations, 4);
+    expect(
+      fourTabDecorations.length,
+    ).toBe(2);
+  });
 
-      // This is an activation event, triggering it causes the package to be
-      // activated.
-      atom.commands.dispatch(workspaceElement, 'color-indent:toggle');
+  it('Should update when editing current line', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(notIndentedText);
 
-      waitsForPromise(() => {
-        return activationPromise;
-      });
+    // // Adds 2 tabulations
+    const textToInsert = '    tabulation of 3';
+    editor.setTextInBufferRange([[1, 0], [1, 21]], textToInsert);
+    const firstDecorations = findDecorations(editor);
 
-      runs(() => {
-        // Now we can test for view visibility
-        let colorIndentElement = workspaceElement.querySelector('.color-indent');
-        expect(colorIndentElement).toBeVisible();
-        atom.commands.dispatch(workspaceElement, 'color-indent:toggle');
-        expect(colorIndentElement).not.toBeVisible();
-      });
-    });
+    expect(firstDecorations.length).toBe(4);
+
+    // Adds another tabulation in another line
+    const textToInsert2 = '  tabulation of 4';
+    editor.setTextInBufferRange([[2, 0], [2, 21]], textToInsert2);
+    const secondDecorations = findDecorations(editor);
+
+    expect(secondDecorations.length).toBe(4);
+
+
+    // There should be 2 style for zero indentation
+    const zeroTabDecorations = findDecorationByIndentation(secondDecorations, 0);
+    expect(
+      zeroTabDecorations.length,
+    ).toBe(2);
+
+    // There should be 1 style for one indentation
+    const oneTabDecorations = findDecorationByIndentation(secondDecorations, 1);
+    expect(
+      oneTabDecorations.length,
+    ).toBe(1);
+
+    // There should be 1 style for two indentation
+    const twoTabDecorations = findDecorationByIndentation(secondDecorations, 2);
+    expect(
+      twoTabDecorations.length,
+    ).toBe(1);
+  });
+
+  it('Should remove all paint toggling the package', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(indentedText);
+    const numberOfLines = editor.getLineCount();
+    expect(findDecorations(editor).length).toBe(numberOfLines);
+
+    // Toggles off
+    togglePackage(atom);
+
+    expect(findDecorations(editor).length).toBe(0);
+  });
+
+  it('Should repaint after toggling package', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(indentedText);
+    const numberOfLines = editor.getLineCount();
+    expect(findDecorations(editor).length).toBe(numberOfLines);
+
+    // Toggles off
+    togglePackage(atom);
+    // Toggles on
+    togglePackage(atom);
+
+    expect(findDecorations(editor).length).toBe(numberOfLines);
+  });
+
+  it('Shoud not paint text once package is toggled off', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(indentedText);
+
+    // Toggles off
+    togglePackage(atom);
+
+    // Adds 2 tabulations
+    const textToInsert = '    tabulation of 3';
+    editor.setTextInBufferRange([[1, 0], [1, 22]], textToInsert);
+
+    // Adds 3 tabulations
+    const textToInsert2 = '      tabulation of 4';
+    editor.setTextInBufferRange([[2, 0], [2, 21]], textToInsert2);
+
+    // Sets the cursor at the last line
+    editor.setCursorScreenPosition([5, 26]);
+    editor.insertNewline();
+    editor.insertText('Hey');
+
+    const decorations = findDecorations(editor);
+    expect(decorations.length).toBe(0);
+  });
+
+  it('Should paint text once package is toggled back on', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(notIndentedText);
+    const numberOfLines = editor.getLineCount();
+
+    // Toggles off
+    togglePackage(atom);
+    // Toggles on
+    togglePackage(atom);
+
+    // Adds 2 tabulations
+    const textToInsert = '    tabulation of 3';
+    editor.setTextInBufferRange([[4, 0], [4, 21]], textToInsert);
+    const decorations = findDecorations(editor);
+
+    expect(decorations.length).toBe(numberOfLines);
+  });
+
+  it('Should set correct paint when removing indentation from a single line', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+
+    editor.setText(indentedLine);
+    expect(findDecorations(editor).length).toBe(1);
+    const fourTabDecorations = findDecorationByIndentation(findDecorations(editor), 4);
+    expect(
+      fourTabDecorations.length,
+    ).toBe(1);
+
+    const indentedLine2 = '      indentation of 3';
+    editor.setTextInBufferRange([[0, 0], [0, 24]], indentedLine2);
+    expect(findDecorations(editor).length).toBe(1);
+    const threeTabDecorations = findDecorationByIndentation(findDecorations(editor), 3);
+    expect(
+      threeTabDecorations.length,
+    ).toBe(1);
+
+    const indentedLine3 = '    indentation of 2';
+    editor.setTextInBufferRange([[0, 0], [0, 22]], indentedLine3);
+    expect(findDecorations(editor).length).toBe(1);
+    const twoTabDecorations = findDecorationByIndentation(findDecorations(editor), 2);
+    expect(
+      twoTabDecorations.length,
+    ).toBe(1);
+  });
+
+  it('Should change painting when configuration colors change', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(indentedText);
+    const numberOfLines = editor.getLineCount();
+
+    atom.config.set('color-indent.color', 'green');
+    const decorations = findDecorations(editor);
+    expect(decorations.length).toBe(numberOfLines);
   });
 });

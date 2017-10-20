@@ -2,17 +2,25 @@
   "name": "color-indent",
   "main": "./lib/color-indent",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "Color for indentation",
   "keywords": [
+    "indent",
+    "indentation",
+    "color"
   ],
-  "activationCommands": {
-    "atom-workspace": "color-indent:toggle"
-  },
   "repository": "https://github.com/atom/color-indent",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0"
   }
 }
