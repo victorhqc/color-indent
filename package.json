@@ -2,9 +2,8 @@
   "name": "color-indent",
   "main": "./lib/color-indent",
   "version": "0.2.2",
-  "description": "Color for indentation",
+  "description": "Use colors to show in a non intrusive manner different indentation levels.",
   "keywords": [
-    "indent",
     "indentation",
     "color"
   ],
