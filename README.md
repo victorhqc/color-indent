@@ -52,6 +52,6 @@ Unfortunately, the Atom API limits the specific markers for this plugin, so the 
 
 ## Usage
 Just type and see how the tabulation color is filled.
-![color-indent-animation](https://i.imgur.com/KP7fZii.gif)
+![color-indent-animation](https://i.imgur.com/KP7fZii.gifv)
 
 You can also toggle the colors if you need to deactivate it or reactivate it quickly. Go to the Atom Command Palette and choose `color-indent: toggle`.
