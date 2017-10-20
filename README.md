@@ -1,7 +1,7 @@
 # color-indent
 Use colors to show in a non intrusive manner different indentation levels.
 
-![Color Indent](https://i.imgur.com/PDi86kw.png)
+![Color Indent](https://i.imgur.com/eHSmMhf.png)
 
 ## Features
 I once saw something like this some years ago. Unfortunately I don't remember where, but since I
