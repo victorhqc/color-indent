@@ -62,7 +62,7 @@ choose the `custom` option in the package configuration for `width`.
     border-right-width: 6px;
   }
 }
-``
+```
 
 ## Usage
 Just type and see how the tabulation color is filled.
