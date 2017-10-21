@@ -21,7 +21,7 @@ this style was with a static `stylesheet`.
 1. Choose one of the preconfigured color in the Package configuration.
 2. Create your own set of colors by adding something like this in `Atom -> Stylesheet...` and then
 choose the `custom` option in the package configuration for `colors`.
-```css
+```less
 .color-indent {
   &.color-indent-0 {
     &.custom {
@@ -56,7 +56,7 @@ choose the `custom` option in the package configuration for `colors`.
 ```
 2. Create your own width by adding something like this in `Atom -> Stylesheet...` and then
 choose the `custom` option in the package configuration for `width`.
-```css
+```less
 .color-indent {
   &.color-indent-width-custom {
     border-right-width: 6px;
