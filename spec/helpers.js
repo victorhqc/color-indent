@@ -21,6 +21,16 @@ export const findDecorations = (editor) => {
   );
 };
 
+export const findDecorationsByColor = (editor, color) =>
+  filter(findDecorations(editor), decoration =>
+    decoration.properties.class.match(new RegExp(color, 'g')) !== null,
+  );
+
+export const findDecorationsByWidth = (editor, width) =>
+  filter(findDecorations(editor), decoration =>
+    decoration.properties.class.match(new RegExp(`color-indent-width-${width}`, 'g')) !== null,
+  );
+
 export const getCurrentColor = atom => atom.config.get('color-indent.color');
 
 export const findDecorationByIndentation = (decorations, indentation) =>

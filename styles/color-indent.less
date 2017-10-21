@@ -4,8 +4,13 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
-@width: 5px;
 @style: solid;
+
+@width-1: 1px;
+@width-2: 2px;
+@width-3: 3px;
+@width-4: 4px;
+@width-5: 5px;
 
 @blue-0: #00a6fb;
 @blue-1: #0582ca;
@@ -78,13 +83,27 @@
 @mustard-4: #b55d1e;
 .generate-color(~'mustard', 4);
 
+.color-indent {
+  border-right-style: solid;
+}
+
+// Generate width options (from 1px to 5px)
+.generate-width(5);
+
+.generate-width(@width) when(@width > 0) {
+  @current-width: "width-@{width}";
+  .generate-width(@width - 1);
+  &.color-indent-width-@{width} {
+    border-right-width: @@current-width;
+  }
+}
 
 .generate-color(@color, @counter) when(@counter >= 0) {
   @current-color: "@{color}-@{counter}";
   .generate-color(@color, @counter - 1);
   &.color-indent-@{counter} {
     &.@{color} {
-      border-right: @width @style @@current-color;
+      border-right-color: @@current-color;
     }
   }
 }

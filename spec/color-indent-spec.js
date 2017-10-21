@@ -2,9 +2,11 @@
 
 import {
   openTestFile,
-  findDecorations,
   activatePackage,
+  findDecorations,
   findDecorationByIndentation,
+  findDecorationsByColor,
+  findDecorationsByWidth,
   togglePackage,
 } from './helpers';
 
@@ -236,7 +238,23 @@ describe('ColorIndent', () => {
     const numberOfLines = editor.getLineCount();
 
     atom.config.set('color-indent.color', 'green');
-    const decorations = findDecorations(editor);
-    expect(decorations.length).toBe(numberOfLines);
+    const greenDecorations = findDecorationsByColor(editor, 'green');
+    expect(greenDecorations.length).toBe(numberOfLines);
+
+    const blueDecorations = findDecorationsByColor(editor, 'blue');
+    expect(blueDecorations.length).toBe(0);
+  });
+
+  it('Should change painting when configuration width change', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(indentedText);
+    const numberOfLines = editor.getLineCount();
+
+    atom.config.set('color-indent.width', '3');
+    const greenDecorations = findDecorationsByWidth(editor, '3');
+    expect(greenDecorations.length).toBe(numberOfLines);
+
+    const blueDecorations = findDecorationsByWidth(editor, '5');
+    expect(blueDecorations.length).toBe(0);
   });
 });
