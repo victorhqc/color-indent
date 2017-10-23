@@ -257,4 +257,33 @@ describe('ColorIndent', () => {
     const blueDecorations = findDecorationsByWidth(editor, '5');
     expect(blueDecorations.length).toBe(0);
   });
+
+  it('Should paint to next tabulation until spaces are met', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(' Some text with only one space before');
+
+    const decorations = findDecorations(editor);
+
+    // There should be 1 style for zero indentation
+    const zeroTabDecorations = findDecorationByIndentation(decorations, 0);
+    expect(
+      zeroTabDecorations.length,
+    ).toBe(1);
+
+    editor.setText('  Some text with two spaces (one tabulation)');
+
+    const decorationsThen = findDecorations(editor);
+
+    // There should be 0 style for zero indentation
+    const zeroTabDecorationsThen = findDecorationByIndentation(decorationsThen, 0);
+    expect(
+      zeroTabDecorationsThen.length,
+    ).toBe(0);
+
+    // There should be 1 style for one indentation
+    const oneTabDecorationsThen = findDecorationByIndentation(decorationsThen, 1);
+    expect(
+      oneTabDecorationsThen.length,
+    ).toBe(1);
+  });
 });
