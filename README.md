@@ -1,5 +1,5 @@
 # color-indent
-[![Build Status](https://travis-ci.org/victorhqc/color-indent.svg?branch=master)](https://travis-ci.org/victorhqc/color-indent)
+![Build Status](https://img.shields.io/circleci/project/github/victorhqc/color-indent/master.svg)
 
 Use colors to show in a non intrusive manner different indentation levels.
 
