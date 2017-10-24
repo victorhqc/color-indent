@@ -3,6 +3,17 @@
 
 Use colors to show in a non intrusive manner different indentation levels.
 
+## Installation
+
+You can install via `apm`:
+```sh
+apm install color-indent
+```
+
+Or, just search for `color-indent` inside Atom's package panel.
+
+---
+
 ![Color Indent](https://i.imgur.com/eHSmMhf.png)
 
 ## Features
