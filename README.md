@@ -73,6 +73,13 @@ enable this to add an space and avoid having this problem.
 
 ![With space](https://i.imgur.com/ZUl3LnQ.png)
 
+If you want, you can even change the gutter style like this in `Atom -> Stylesheet...`
+```less
+.gutter[gutter-name="color-indent"] {
+    min-width: 10px;
+}
+```
+
 ## Usage
 Just type and see how the tabulation color is filled.
 
