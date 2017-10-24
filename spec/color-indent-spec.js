@@ -267,7 +267,7 @@ describe('ColorIndent', () => {
     expect(gutter).not.toBeNull();
 
 
-    atom.config.set('color-indent.showGutter', true);
+    atom.config.set('color-indent.showGutter', false);
 
     const gutterThen = editor.gutterWithName('color-indent');
     expect(gutterThen).toBeNull();
