@@ -64,6 +64,14 @@ choose the `custom` option in the package configuration for `width`.
 }
 ```
 
+### Gutter
+![No space](https://i.imgur.com/7Vtbkrm.png)
+Some packages, like `eslint` create a Gutter in Atom. That means that the style for `color-indent`
+and the actual code have a space between each other. However, if there are no packages that do this, you can
+enable this to add an space and avoid having this problem.
+
+![With space](https://i.imgur.com/ZUl3LnQ.png)
+
 ## Usage
 Just type and see how the tabulation color is filled.
 

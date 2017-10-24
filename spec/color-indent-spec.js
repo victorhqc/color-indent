@@ -258,6 +258,21 @@ describe('ColorIndent', () => {
     expect(blueDecorations.length).toBe(0);
   });
 
+  it('Should add a gutter when configuration changes', () => {
+    const editor = atom.workspace.getActiveTextEditor();
+    editor.setText(indentedText);
+
+    const gutter = editor.gutterWithName('color-indent');
+
+    expect(gutter).not.toBeNull();
+
+
+    atom.config.set('color-indent.showGutter', false);
+
+    const gutterThen = editor.gutterWithName('color-indent');
+    expect(gutterThen).toBeNull();
+  });
+
   it('Should paint to next tabulation until spaces are met', () => {
     const editor = atom.workspace.getActiveTextEditor();
     editor.setText(' Some text with only one space before');
