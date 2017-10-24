@@ -1,5 +1,5 @@
 # color-indent
-![Build Status](https://img.shields.io/circleci/project/github/victorhqc/color-indent/master.svg)
+![Build Status](https://img.shields.io/circleci/project/github/victorhqc/color-indent/master.svg) ![License](https://img.shields.io/apm/l/color-indent.svg) ![Version](https://img.shields.io/apm/v/color-indent.svg) ![Downloads](https://img.shields.io/apm/dm/color-indent.svg)
 
 Use colors to show in a non intrusive manner different indentation levels.
 
