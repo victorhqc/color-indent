@@ -21,6 +21,8 @@ color 0`;
 
 const indentedLine = '        indentation of 4';
 
+const nonIndentedLine = 'indentation of 0';
+
 // Use the command `window:run-package-specs` (cmd-alt-ctrl-p) to run specs.
 //
 // To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
@@ -113,7 +115,7 @@ describe('ColorIndent', () => {
 
       expect(editor.findMarkers({
         colorIndent: true,
-      }).length).toBe(numberOfLines + 1);
+      }).length).toBe(numberOfLines);
     });
   });
 
@@ -219,7 +221,49 @@ describe('ColorIndent', () => {
       const numberOfLines = editor.getLineCount();
       expect(editor.findMarkers({
         colorIndent: true,
-      }).length).toBe(numberOfLines + 1);
+      }).length).toBe(numberOfLines);
+    });
+
+    it('Should handle changing indentation in text', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(notIndentedText);
+
+      editor.setTextInBufferRange([[1, 0], [1, 7]], '    color 2');
+      editor.setTextInBufferRange([[1, 0], [1, 7 + (2 * 2)]], '  color 1');
+      editor.setTextInBufferRange([[1, 0], [1, 7 + (2 * 1)]], '      color 3');
+
+      editor.setTextInBufferRange([[2, 0], [2, 7]], '  color 1');
+      editor.setTextInBufferRange([[2, 0], [2, 7 + (2 * 1)]], '    color 2');
+      editor.insertNewlineBelow();
+      editor.setCursorScreenPosition([2, 0]);
+      editor.insertText('  ');
+      editor.insertText('    ');
+      editor.insertText('      ');
+      editor.setCursorScreenPosition([2, 4]);
+      editor.backspace();
+      editor.backspace();
+      editor.backspace();
+
+      const numberOfLines = editor.getLineCount();
+      expect(editor.findMarkers({
+        colorIndent: true,
+      }).length).toBe(numberOfLines, 'Markers should match number of lines');
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 0,
+      }).length).toBe(3, 'Indentation of 0 should be 3');
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 3,
+      }).length).toBe(1, 'Indentation of 3 should be 1');
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 2,
+      }).length).toBe(0);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 1,
+      }).length).toBe(0);
     });
 
     it('Should set correct paint when removing indentation from a single line', () => {
@@ -253,6 +297,50 @@ describe('ColorIndent', () => {
       expect(editor.findMarkers({
         colorIndent: true,
         indent: 2,
+      }).length).toBe(1);
+    });
+
+    it('Should set correct paint when adding indentation from a single line', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+
+      editor.setText(nonIndentedLine);
+
+      expect(editor.findMarkers({
+        colorIndent: true,
+      }).length).toBe(1);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 0,
+      }).length).toBe(1);
+
+      const indentedLine1 = '  indentation of 1';
+      editor.setTextInBufferRange([[0, 0], [0, 24]], indentedLine1);
+      expect(editor.findMarkers({
+        colorIndent: true,
+      }).length).toBe(1);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 1,
+      }).length).toBe(1);
+
+      const indentedLine2 = '    indentation of 2';
+      editor.setTextInBufferRange([[0, 0], [0, 22]], indentedLine2);
+      expect(editor.findMarkers({
+        colorIndent: true,
+      }).length).toBe(1);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 2,
+      }).length).toBe(1);
+
+      const indentedLine3 = '      indentation of 3';
+      editor.setTextInBufferRange([[0, 0], [0, 22]], indentedLine3);
+      expect(editor.findMarkers({
+        colorIndent: true,
+      }).length).toBe(1);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 3,
       }).length).toBe(1);
     });
 
