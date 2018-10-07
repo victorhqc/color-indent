@@ -29,7 +29,7 @@ Just type and see how the tabulation color is filled.
 
 Choose a custom color
 
-[Custom color](https://i.imgur.com/bID1oSf.gif)
+![Custom color](https://i.imgur.com/bID1oSf.gif)
 
 You can also toggle the colors if you need to deactivate it or reactivate it quickly.
 Go to the Atom Command Palette and choose `color-indent: toggle`.
