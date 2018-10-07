@@ -1,13 +1,11 @@
 'use babel';
 
 import pSBC from 'shade-blend-color';
-import { Color } from 'atom';
 import {
   openTestFile,
   activatePackage,
   findDecorations,
   findDecorationByIndentation,
-  findDecorationsByColor,
   findDecorationsByWidth,
   togglePackage,
 } from './helpers';
@@ -260,6 +258,37 @@ describe('ColorIndent', () => {
         indent: 2,
       }).length).toBe(1);
     });
+
+    it('Should paint to next tabulation until spaces are met', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(' Some text with only one space before');
+
+      // There should be 1 style for zero indentation
+      expect(
+        editor.findMarkers({
+          colorIndent: true,
+          indent: 0,
+        }).length,
+      ).toBe(1);
+
+      editor.setText('  Some text with two spaces (one tabulation)');
+
+      // There should be 0 style for zero indentation
+      expect(
+        editor.findMarkers({
+          colorIndent: true,
+          indent: 0,
+        }).length,
+      ).toBe(0);
+
+      // There should be 1 style for one indentation
+      expect(
+        editor.findMarkers({
+          colorIndent: true,
+          indent: 1,
+        }).length,
+      ).toBe(1);
+    });
   });
 
   describe('Configuration', () => {
@@ -292,62 +321,60 @@ describe('ColorIndent', () => {
         color: pSBC((4 * (-100 / indentationDepth)) / 100, chosenColor),
       }).length).toBe(1);
     });
-  });
 
-  xit('Should change painting when configuration width change', () => {
-    const editor = atom.workspace.getActiveTextEditor();
-    editor.setText(indentedText);
-    const numberOfLines = editor.getLineCount();
+    it('Should use the default color', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(indentedText);
+      const chosenColor = '#ef3b17';
 
-    atom.config.set('color-indent.width', '3');
-    const greenDecorations = findDecorationsByWidth(editor, '3');
-    expect(greenDecorations.length).toBe(numberOfLines);
+      // Set to red-ish color
+      atom.config.set('color-indent.color.customColor', chosenColor);
+      atom.config.set('color-indent.color.useDefault', true);
 
-    const blueDecorations = findDecorationsByWidth(editor, '5');
-    expect(blueDecorations.length).toBe(0);
-  });
+      expect(editor.findMarkers({
+        colorIndent: true,
+        color: pSBC(0, chosenColor),
+      }).length).toBe(0);
 
-  xit('Should add a gutter when configuration changes', () => {
-    const editor = atom.workspace.getActiveTextEditor();
-    editor.setText(indentedText);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        color: pSBC(0, '#00a6fb'),
+      }).length).toBe(1);
+    });
 
-    const gutter = editor.gutterWithName('color-indent');
+    it('Should change painting when configuration width change', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(indentedText);
+      const numberOfLines = editor.getLineCount();
 
-    expect(gutter).not.toBeNull();
+      atom.config.set('color-indent.width', 1);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        width: '1px',
+      }).length).toBe(numberOfLines);
+      expect(editor.findMarkers({
+        colorIndent: true,
+        width: '3px',
+      }).length).toBe(0);
+    });
 
+    it('Should change painting when tabulation depth  lebel changes', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(indentedText);
+      const numberOfLines = editor.getLineCount();
 
-    atom.config.set('color-indent.showGutter', false);
+      atom.config.set('color-indent.indentationDepthLevel', 2);
 
-    const gutterThen = editor.gutterWithName('color-indent');
-    expect(gutterThen).toBeNull();
-  });
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 0,
+      }).length).toBe(1);
 
-  xit('Should paint to next tabulation until spaces are met', () => {
-    const editor = atom.workspace.getActiveTextEditor();
-    editor.setText(' Some text with only one space before');
-
-    const decorations = findDecorations(editor);
-
-    // There should be 1 style for zero indentation
-    const zeroTabDecorations = findDecorationByIndentation(decorations, 0);
-    expect(
-      zeroTabDecorations.length,
-    ).toBe(1);
-
-    editor.setText('  Some text with two spaces (one tabulation)');
-
-    const decorationsThen = findDecorations(editor);
-
-    // There should be 0 style for zero indentation
-    const zeroTabDecorationsThen = findDecorationByIndentation(decorationsThen, 0);
-    expect(
-      zeroTabDecorationsThen.length,
-    ).toBe(0);
-
-    // There should be 1 style for one indentation
-    const oneTabDecorationsThen = findDecorationByIndentation(decorationsThen, 1);
-    expect(
-      oneTabDecorationsThen.length,
-    ).toBe(1);
+      // Indentation color can't exceed the depth level we chose.
+      expect(editor.findMarkers({
+        colorIndent: true,
+        indent: 1,
+      }).length).toBe(numberOfLines - 1);
+    });
   });
 });
