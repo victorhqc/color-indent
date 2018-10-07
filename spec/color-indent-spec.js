@@ -4,9 +4,6 @@ import pSBC from 'shade-blend-color';
 import {
   openTestFile,
   activatePackage,
-  findDecorations,
-  findDecorationByIndentation,
-  findDecorationsByWidth,
   togglePackage,
 } from './helpers';
 
