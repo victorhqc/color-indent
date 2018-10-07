@@ -1,6 +1,6 @@
 {
   "name": "color-indent",
-  "main": "./lib/color-indent",
+  "main": "./lib/index.js",
   "version": "0.5.3",
   "description": "Use colors to show in a non intrusive manner different indentation levels.",
   "keywords": [
@@ -13,7 +13,9 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "~4.17.5",
+    "redom": "^3.14.1",
+    "shade-blend-color": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^4.8.0",
