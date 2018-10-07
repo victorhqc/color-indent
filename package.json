@@ -1,7 +1,7 @@
 {
   "name": "color-indent",
   "main": "./lib/index.js",
-  "version": "0.5.3",
+  "version": "1.0.0",
   "description": "Use colors to show in a non intrusive manner different indentation levels.",
   "keywords": [
     "indentation",
