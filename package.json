@@ -12,9 +12,12 @@
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
+  "activationHooks": [
+    "core:loaded-shell-environment"
+  ],
   "dependencies": {
-    "lodash": "~4.17.5",
-    "redom": "^3.14.1",
+    "lodash": "~4.17.11",
+    "redom": "^3.18.0",
     "shade-blend-color": "^1.0.0"
   },
   "devDependencies": {
