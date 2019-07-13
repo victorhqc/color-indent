@@ -1,8 +1,6 @@
 'use babel';
 
-export const saveEditor = editor => new Promise(resolve =>
-  editor.save().then(resolve(editor)),
-);
+export const saveEditor = editor => new Promise(resolve => editor.save().then(resolve(editor)));
 
 export const openTestFile = atom => atom.workspace.open(`${__dirname}/text-helper.txt`);
 

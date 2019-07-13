@@ -31,7 +31,8 @@ const nonIndentedLine = 'indentation of 0';
 describe('ColorIndent', () => {
   beforeEach(() => {
     waitsForPromise(() => openTestFile(atom));
-
+    atom.packages.triggerDeferredActivationHooks();
+    waitsForPromise(() => atom.updateProcessEnvAndTriggerHooks());
     waitsForPromise(() => activatePackage(atom));
   });
 
@@ -376,6 +377,29 @@ describe('ColorIndent', () => {
     });
   });
 
+  describe('Gutter Width', () => {
+    it('When enabled, gutter should have no style', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+
+      editor.setText(indentedText);
+
+      const gutter = editor.gutterWithName('color-indent');
+
+      expect(gutter.getElement().getAttribute('style')).toBe('');
+    });
+
+    it('When disabled, gutter width should match chosen width', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(indentedText);
+      atom.config.set('color-indent.gutterWidth', true);
+      const width = `${atom.config.get('color-indent.width')}px`;
+
+      const gutter = editor.gutterWithName('color-indent');
+
+      expect(gutter.getElement().getAttribute('style')).toBe(`width:${width};min-width:${width}`);
+    });
+  });
+
   describe('Configuration', () => {
     it('Should change painting when configuration colors change', () => {
       const editor = atom.workspace.getActiveTextEditor();
@@ -460,6 +484,28 @@ describe('ColorIndent', () => {
         colorIndent: true,
         indent: 1,
       }).length).toBe(numberOfLines - 1);
+    });
+
+    it('Should update gutter width by changing width', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(indentedText);
+      atom.config.set('color-indent.gutterWidth', true);
+      atom.config.set('color-indent.width', 10);
+
+      const gutter = editor.gutterWithName('color-indent');
+
+      expect(gutter.getElement().getAttribute('style')).toBe('width:10px;min-width:10px');
+    });
+
+    it('Should remove gutterWidth style', () => {
+      const editor = atom.workspace.getActiveTextEditor();
+      editor.setText(indentedText);
+      atom.config.set('color-indent.gutterWidth', true);
+      atom.config.set('color-indent.gutterWidth', false);
+
+      const gutter = editor.gutterWithName('color-indent');
+
+      expect(gutter.getElement().getAttribute('style')).toBe('');
     });
   });
 });
