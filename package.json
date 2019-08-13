@@ -1,0 +1,14 @@
+{
+  "name": "language-prisma",
+  "version": "0.0.0",
+  "description": "Prisma Language for Atom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Quiroz Castro <victorhqc@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "tree-sitter-prisma": "0.0.1"
+  }
+}
