@@ -22,61 +22,69 @@ comments:
 scopes:
   'program': 'source.prisma'
 
-  'property_identifier': [
-    {
-      match: '^[\$A-Z_]+$',
-      scopes: 'constant.other.property.prisma'
-    }
-
-    'variable.other.object.property'
+  'identifier': [
+    {match: '^[A-Z\\d_]+$', scopes: 'constant.other'}
   ]
 
-  'member_expression > property_identifier': 'variable.other.object.property.unquoted'
+  '''
+  model_declaration > identifier,
+  ''': 'entity.name.model'
 
+  # 'property_identifier': [
+  #   {
+  #     match: '^[\$A-Z_]+$',
+  #     scopes: 'constant.other.property.prisma'
+  #   }
+  #
+  #   'variable.other.object.property'
+  # ]
+  #
+  # 'member_expression > property_identifier': 'variable.other.object.property.unquoted'
+  #
   '"("': 'punctuation.definition.parameters.begin.bracket.round'
   '")"': 'punctuation.definition.parameters.end.bracket.round'
   '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
   '"}"': 'punctuation.definition.function.body.end.bracket.curly'
-  '";"': 'punctuation.terminator.statement.semicolon'
+  # '";"': 'punctuation.terminator.statement.semicolon'
   '"["': 'punctuation.definition.array.begin.bracket.square'
   '"]"': 'punctuation.definition.array.end.bracket.square'
-
-  'null': 'constant.language.null'
-  'true': 'constant.language.boolean.true'
-  'false': 'constant.language.boolean.false'
-
+  #
+  # 'null': 'constant.language.null'
+  # 'true': 'constant.language.boolean.true'
+  # 'false': 'constant.language.boolean.false'
+  #
   '"."': 'meta.delimiter.period'
   '","': 'meta.delimiter.comma'
-
-  '"="': 'keyword.operator.prisma'
-  '"!"': 'keyword.operator.prisma'
-  '"+"': 'keyword.operator.prisma'
-  '"-"': 'keyword.operator.prisma'
-  '"*"': 'keyword.operator.prisma'
-  '"/"': 'keyword.operator.prisma'
-  '"%"': 'keyword.operator.prisma'
-  '"=="': 'keyword.operator.prisma'
-  '"!="': 'keyword.operator.prisma'
-  '">="': 'keyword.operator.prisma'
-  '"<="': 'keyword.operator.prisma'
-  '">"': 'keyword.operator.prisma'
-  '"<"': 'keyword.operator.prisma'
+  #
+  # '"="': 'keyword.operator.prisma'
+  # '"!"': 'keyword.operator.prisma'
+  # '"+"': 'keyword.operator.prisma'
+  # '"-"': 'keyword.operator.prisma'
+  # '"*"': 'keyword.operator.prisma'
+  # '"/"': 'keyword.operator.prisma'
+  # '"%"': 'keyword.operator.prisma'
+  # '"=="': 'keyword.operator.prisma'
+  # '"!="': 'keyword.operator.prisma'
+  # '">="': 'keyword.operator.prisma'
+  # '"<="': 'keyword.operator.prisma'
+  # '">"': 'keyword.operator.prisma'
+  # '"<"': 'keyword.operator.prisma'
   '":"': 'keyword.operator.prisma'
-  '"?"': 'keyword.operator.prisma'
-  '"&&"': 'keyword.operator.prisma'
-  '"||"': 'keyword.operator.prisma'
-  '"~"': 'keyword.operator.prisma'
-  '"^"': 'keyword.operator.prisma'
-  '">>"': 'keyword.operator.prisma'
-  '"<<"': 'keyword.operator.prisma'
-  '"|"': 'keyword.operator.prisma'
-
-  # 'model_definition': 'meta.class'
+  # '"?"': 'keyword.operator.prisma'
+  # '"&&"': 'keyword.operator.prisma'
+  # '"||"': 'keyword.operator.prisma'
+  # '"~"': 'keyword.operator.prisma'
+  # '"^"': 'keyword.operator.prisma'
+  # '">>"': 'keyword.operator.prisma'
+  # '"<<"': 'keyword.operator.prisma'
+  # '"|"': 'keyword.operator.prisma'
+  #
+  # # 'model_definition': 'meta.class'
   '"model"': 'storage.type.model'
-  '"datasource"': 'storage.type.datasource'
+  # '"datasource"': 'storage.type.datasource'
   'model > identifier': 'entity.name.model'
-  'datasource > identifier': 'entity.name.datasource'
-  'column_declaration > identifier': 'variable.other.object.property',
+  # 'datasource > identifier': 'entity.name.datasource'
+  # 'column_declaration > identifier': 'variable.other.object.property',
   'comment': [
     {
       match: "^//",
@@ -84,46 +92,45 @@ scopes:
     },
     'comment.block'
   ]
-
-
-  'namespace': 'meta.function'
-  # 'namespace': 'storage.type.namespace'
-  'namespace > identifier': 'entity.name.function'
-
-  'namespace > call_expression > identifier': 'entity.name.function'
-  'call_expression > identifier': 'entity.name.function'
-
-  'call_expression > member_expression > property_identifier': 'entity.name.function'
-
-  'call_expression > member_expression > property_identifier': 'entity.name.function'
-
+  #
+  # 'namespace': 'meta.function'
+  # # 'namespace': 'storage.type.namespace'
+  # 'namespace > identifier': 'entity.name.function'
+  #
+  # 'namespace > call_expression > identifier': 'entity.name.function'
+  # 'call_expression > identifier': 'entity.name.function'
+  #
+  # 'call_expression > member_expression > property_identifier': 'entity.name.function'
+  #
+  # 'call_expression > member_expression > property_identifier': 'entity.name.function'
+  #
   'number': 'constant.numeric'
   'string': 'string.quoted'
-
-  'type_identifier': 'support.storage.type'
-
-  'identifier': [
-    {
-      exact: /String|DateTime/,
-      scopes: 'builtin.variable'
-    }
-    # {
-    #   match: '^(global|module|exports|__filename|__dirname|window|document)$',
-    #   scopes: 'support.variable'
-    # },
-    # {
-    #   exact: 'require', scopes: 'support.function'
-    # }
-    # {
-    #   match: '^[\$A-Z_]{2,}$',
-    #   scopes: 'constant.other'
-    # },
-    {
-      match: '^[\$A-Z_]{2,}$',
-      scopes: 'constant.other'
-    },
-    {
-      match: '^[A-Z]',
-      scopes: 'meta.class'
-    },
-  ]
+  #
+  # 'type_identifier': 'support.storage.type'
+  #
+  # 'identifier': [
+  #   {
+  #     exact: /String|DateTime/,
+  #     scopes: 'builtin.variable'
+  #   }
+  #   # {
+  #   #   match: '^(global|module|exports|__filename|__dirname|window|document)$',
+  #   #   scopes: 'support.variable'
+  #   # },
+  #   # {
+  #   #   exact: 'require', scopes: 'support.function'
+  #   # }
+  #   # {
+  #   #   match: '^[\$A-Z_]{2,}$',
+  #   #   scopes: 'constant.other'
+  #   # },
+  #   {
+  #     match: '^[\$A-Z_]{2,}$',
+  #     scopes: 'constant.other'
+  #   },
+  #   {
+  #     match: '^[A-Z]',
+  #     scopes: 'meta.class'
+  #   },
+  # ]
