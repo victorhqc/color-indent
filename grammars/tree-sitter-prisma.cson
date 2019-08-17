@@ -2,8 +2,16 @@ name: 'Prisma'
 scopeName: 'source.prisma'
 type: 'tree-sitter'
 parser: 'tree-sitter-prisma'
-fileTypes: ['prisma']
+
+fileTypes: [
+  'prisma'
+]
+
+comments:
+  start: '// '
+
 injectionRegex: '^prisma$'
+
 folds: [
   {
     type: 'comment'
@@ -17,8 +25,6 @@ folds: [
     end: { index: -1, type: ']' }
   }
 ]
-comments:
-  start: '// '
 scopes:
   'program': 'source.prisma'
 
@@ -26,9 +32,16 @@ scopes:
     {match: '^[A-Z\\d_]+$', scopes: 'constant.other'}
   ]
 
+  # 'identifier': 'storage.type.identifier'
+  # 'identifier': 'entity.name.function'
+  # 'structure_identifier': 'entity.name.function'
+
   '''
+  datasource_declaration > identifier,
   model_declaration > identifier,
-  ''': 'entity.name.model'
+  model > identifier,
+  call_expression > identifier,
+  ''': 'entity.name.function'
 
   # 'property_identifier': [
   #   {
@@ -82,7 +95,7 @@ scopes:
   # # 'model_definition': 'meta.class'
   '"model"': 'storage.type.model'
   # '"datasource"': 'storage.type.datasource'
-  'model > identifier': 'entity.name.model'
+  # 'model > identifier': 'entity.name.model'
   # 'datasource > identifier': 'entity.name.datasource'
   # 'column_declaration > identifier': 'variable.other.object.property',
   'comment': [
