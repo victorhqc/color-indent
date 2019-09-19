@@ -31,17 +31,36 @@ scopes:
   'identifier': [
     {match: '^[A-Z\\d_]+$', scopes: 'constant.other'}
   ]
+  'enumeral': 'constant.other'
 
   # 'identifier': 'storage.type.identifier'
   # 'identifier': 'entity.name.function'
   # 'structure_identifier': 'entity.name.function'
 
   '''
+  namespace > identifier,
+  namespace > call_expression > identifier,
+  namespace > member_expression
+  ''': 'entity.name.tag'
+
+  '''
   datasource_declaration > identifier,
   model_declaration > identifier,
-  model > identifier,
+  generator_declaration > identifier,
+  enum_declaration > identifier,
   call_expression > identifier,
   ''': 'entity.name.function'
+
+  # '''
+  # column_declaration > identifier,
+  # ''': 'variable.other.column.property'
+  'column_type > identifier': 'support.storage.type'
+  # 'identifier': [
+  #   {
+  #     match: '^(global|module|exports|__filename|__dirname|window|document)$',
+  #     scopes: 'support.variable'
+  #   },
+  # ]
 
   # 'property_identifier': [
   #   {
@@ -58,18 +77,18 @@ scopes:
   '")"': 'punctuation.definition.parameters.end.bracket.round'
   '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
   '"}"': 'punctuation.definition.function.body.end.bracket.curly'
-  # '";"': 'punctuation.terminator.statement.semicolon'
+
   '"["': 'punctuation.definition.array.begin.bracket.square'
   '"]"': 'punctuation.definition.array.end.bracket.square'
-  #
-  # 'null': 'constant.language.null'
-  # 'true': 'constant.language.boolean.true'
-  # 'false': 'constant.language.boolean.false'
-  #
+
+  'null': 'constant.language.null'
+  'true': 'constant.language.boolean.true'
+  'false': 'constant.language.boolean.false'
+
   '"."': 'meta.delimiter.period'
   '","': 'meta.delimiter.comma'
   #
-  # '"="': 'keyword.operator.prisma'
+  '"="': 'keyword.operator.prisma'
   # '"!"': 'keyword.operator.prisma'
   # '"+"': 'keyword.operator.prisma'
   # '"-"': 'keyword.operator.prisma'
@@ -83,17 +102,20 @@ scopes:
   # '">"': 'keyword.operator.prisma'
   # '"<"': 'keyword.operator.prisma'
   '":"': 'keyword.operator.prisma'
-  # '"?"': 'keyword.operator.prisma'
-  # '"&&"': 'keyword.operator.prisma'
-  # '"||"': 'keyword.operator.prisma'
+  '"?"': 'keyword.operator.prisma'
+  '"&&"': 'keyword.operator.prisma'
+  '"||"': 'keyword.operator.prisma'
   # '"~"': 'keyword.operator.prisma'
   # '"^"': 'keyword.operator.prisma'
   # '">>"': 'keyword.operator.prisma'
   # '"<<"': 'keyword.operator.prisma'
-  # '"|"': 'keyword.operator.prisma'
+  '"|"': 'keyword.operator.prisma'
   #
   # # 'model_definition': 'meta.class'
   '"model"': 'storage.type.model'
+  '"generator"': 'storage.type.generator'
+  '"datasource"': 'storage.type.datasource'
+  '"enum"': 'storage.type.enum'
   # '"datasource"': 'storage.type.datasource'
   # 'model > identifier': 'entity.name.model'
   # 'datasource > identifier': 'entity.name.datasource'
