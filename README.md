@@ -1,4 +1,6 @@
 # Language Prisma
 
-**This is a WIP:** Please don't use it yet, the grammar is buggy and still a lot of work is needed
-like cleanup and implement all the features.
+Adds syntax highlighting and snippets for JavaScript in Atom.
+
+Contributions are greatly appreciated. Please fork this repository and open a pull request to add
+snippets, make grammar tweaks, etc.

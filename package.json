@@ -9,6 +9,6 @@
   "author": "Victor Quiroz Castro <victorhqc@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "tree-sitter-prisma": "0.0.1"
+    "tree-sitter-prisma": "1.0.0"
   }
 }
