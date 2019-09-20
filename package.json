@@ -2,13 +2,20 @@
   "name": "language-prisma",
   "version": "0.0.0",
   "description": "Prisma Language for Atom",
+  "keywords": [
+    "prisma",
+    "language"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Victor Quiroz Castro <victorhqc@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/victorhqc/language-prisma",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:victorhqc/color-indent.git"
+  },
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
