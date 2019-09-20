@@ -41,10 +41,10 @@ scopes:
   # 'structure_identifier': 'entity.name.function'
 
   '''
-  namespace > identifier,
-  namespace > call_expression > identifier,
-  namespace > member_expression,
-  namespace > call_expression > member_expression
+  attribute > identifier,
+  attribute > call_expression > identifier,
+  attribute > member_expression,
+  attribute > call_expression > member_expression
   ''': 'entity.name.tag'
 
   '''
