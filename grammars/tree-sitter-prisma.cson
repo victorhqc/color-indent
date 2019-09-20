@@ -36,10 +36,6 @@ scopes:
   ]
   'enumeral': 'constant.other'
 
-  # 'identifier': 'storage.type.identifier'
-  # 'identifier': 'entity.name.function'
-  # 'structure_identifier': 'entity.name.function'
-
   '''
   attribute > identifier,
   attribute > call_expression > identifier,
@@ -64,39 +60,8 @@ scopes:
 
   'type_declaration > assignment_expression > identifier': 'support.storage.type'
 
-  # '''
-  # column_declaration > identifier,
-  # ''': 'variable.other.column.property'
   'column_type > identifier': 'support.storage.type'
 
-  # '''
-  # "String",
-  # "Int",
-  # "Float",
-  # "Subscription",
-  # "DateTime",
-  # "WhereInput",
-  # "IDFilter",
-  # "StringFilter"
-  # '''
-  # 'identifier': [
-  #   {
-  #     match: '^(global|module|exports|__filename|__dirname|window|document)$',
-  #     scopes: 'support.variable'
-  #   },
-  # ]
-
-  # 'property_identifier': [
-  #   {
-  #     match: '^[\$A-Z_]+$',
-  #     scopes: 'constant.other.property.prisma'
-  #   }
-  #
-  #   'variable.other.object.property'
-  # ]
-  #
-  # 'member_expression > property_identifier': 'variable.other.object.property.unquoted'
-  #
   '"("': 'punctuation.definition.parameters.begin.bracket.round'
   '")"': 'punctuation.definition.parameters.end.bracket.round'
   '"{"': 'punctuation.definition.function.body.begin.bracket.curly'
@@ -111,40 +76,22 @@ scopes:
 
   '"."': 'meta.delimiter.period'
   '","': 'meta.delimiter.comma'
-  #
-  '"="': 'keyword.operator.prisma'
-  # '"!"': 'keyword.operator.prisma'
-  # '"+"': 'keyword.operator.prisma'
-  # '"-"': 'keyword.operator.prisma'
-  # '"*"': 'keyword.operator.prisma'
-  # '"/"': 'keyword.operator.prisma'
-  # '"%"': 'keyword.operator.prisma'
-  # '"=="': 'keyword.operator.prisma'
-  # '"!="': 'keyword.operator.prisma'
-  # '">="': 'keyword.operator.prisma'
-  # '"<="': 'keyword.operator.prisma'
-  # '">"': 'keyword.operator.prisma'
-  # '"<"': 'keyword.operator.prisma'
-  '":"': 'keyword.operator.prisma'
-  '"?"': 'keyword.operator.prisma'
-  '"&&"': 'keyword.operator.prisma'
-  '"||"': 'keyword.operator.prisma'
-  # '"~"': 'keyword.operator.prisma'
-  # '"^"': 'keyword.operator.prisma'
-  # '">>"': 'keyword.operator.prisma'
-  # '"<<"': 'keyword.operator.prisma'
-  '"|"': 'keyword.operator.prisma'
-  #
-  # # 'model_definition': 'meta.class'
+
+  '''
+  "=",
+  ":",
+  "?",
+  "&&",
+  "||",
+  "|",
+  "+"
+  ''': 'keyword.operator.prisma'
+
   '"model"': 'storage.type.model'
   '"generator"': 'storage.type.generator'
   '"datasource"': 'storage.type.datasource'
   '"enum"': 'storage.type.enum'
   '"type"': 'storage.type.tyoe'
-  # '"datasource"': 'storage.type.datasource'
-  # 'model > identifier': 'entity.name.model'
-  # 'datasource > identifier': 'entity.name.datasource'
-  # 'column_declaration > identifier': 'variable.other.object.property',
   'comment': [
     {
       match: "^/// ",
@@ -159,45 +106,6 @@ scopes:
     },
     'comment.block'
   ]
-  #
-  # 'namespace': 'meta.function'
-  # # 'namespace': 'storage.type.namespace'
-  # 'namespace > identifier': 'entity.name.function'
-  #
-  # 'namespace > call_expression > identifier': 'entity.name.function'
-  # 'call_expression > identifier': 'entity.name.function'
-  #
-  # 'call_expression > member_expression > property_identifier': 'entity.name.function'
-  #
-  # 'call_expression > member_expression > property_identifier': 'entity.name.function'
-  #
+
   'number': 'constant.numeric'
   'string': 'string.quoted'
-  #
-  # 'type_identifier': 'support.storage.type'
-  #
-  # 'identifier': [
-  #   {
-  #     exact: /String|DateTime/,
-  #     scopes: 'builtin.variable'
-  #   }
-  #   # {
-  #   #   match: '^(global|module|exports|__filename|__dirname|window|document)$',
-  #   #   scopes: 'support.variable'
-  #   # },
-  #   # {
-  #   #   exact: 'require', scopes: 'support.function'
-  #   # }
-  #   # {
-  #   #   match: '^[\$A-Z_]{2,}$',
-  #   #   scopes: 'constant.other'
-  #   # },
-  #   {
-  #     match: '^[\$A-Z_]{2,}$',
-  #     scopes: 'constant.other'
-  #   },
-  #   {
-  #     match: '^[A-Z]',
-  #     scopes: 'meta.class'
-  #   },
-  # ]
