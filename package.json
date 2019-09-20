@@ -8,6 +8,10 @@
   },
   "author": "Victor Quiroz Castro <victorhqc@gmail.com>",
   "license": "MIT",
+  "repository": "https://github.com/victorhqc/language-prisma",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
   "dependencies": {
     "tree-sitter-prisma": "1.0.0"
   }
